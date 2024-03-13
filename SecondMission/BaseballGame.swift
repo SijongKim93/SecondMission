@@ -7,51 +7,69 @@
 
 import Foundation
 
-class RandamNumber {
-    
-    func playerSelect(_ number1: Int, _ number2: Int, _ number3: Int) -> [Int] {
-        let select = [number1, number2, number3]
-        return select
-    }
 
+class NumberChoice {
     
-    //플레이어가 값을 입력
-    func select() {
+    
+    var playerNumbers: [Int] = []
+    var comNumbers: [Int] = []
+    
+    func GameStart() {
+        print("1~9까지 숫자 중 세개의 숫자를 입력해주세요")
+        
+        //플레이어 숫자 입력 , 컴퓨터 랜덤 숫자 저장
         guard let input = readLine() else {
             print("입력이 없습니다.")
             return
         }
-        let numbers: [Int] = input.compactMap { Int(String($0)) }
+        playerNumbers = input.compactMap { Int(String($0)) }
         
-        if numbers.count != 3 {
-            print("세 개의 숫자를 입력해주세요.")
-            return
-        }
         
-        let number1 = numbers[0]
-        let number2 = numbers[1]
-        let number3 = numbers[2]
-        
-    }
-    
-    //컴퓨터가 랜덤으로 값을 저장
-    func start() {
+        // 컴퓨터 랜덤숫자 설정
         var comChoice: [Int]
         repeat {
-            let comNumber1: Int = Int.random(in: 0...9)
-            let comNumber2: Int = Int.random(in: 0...9)
-            let comNumber3: Int = Int.random(in: 0...9)
+            let comNumber1: Int = Int.random(in: 1...9)
+            let comNumber2: Int = Int.random(in: 1...9)
+            let comNumber3: Int = Int.random(in: 1...9)
             
             comChoice = [comNumber1, comNumber2, comNumber3]
         } while Set(comChoice).count < 3
+        comNumbers = comChoice
         
-        let comNumber1 = comChoice[0]
-        let comNumber2 = comChoice[1]
-        let comNumber3 = comChoice[2]
         
-        //중복 값 제거
-        print("컴퓨터가 선택한 값\(comChoice)")
+
+        // 플레이어 , 컴퓨터 숫자 비교 후 결과 도출
+        guard playerNumbers.count == comNumbers.count else {
+            print("세 개의 숫자를 입력해 주세요.")
+            return
+        }
+        
+        var strike = 0
+        var ball = 0
+        
+        for i in 0..<playerNumbers.count {
+            let playerNumer = playerNumbers[i]
+            
+            if comNumbers.contains(playerNumer) {
+                strike += 1
+            } else {
+                ball += 1
+            }
+        }
+        
+        if strike > 0 {
+            print("\(strike)스트라이크")
+        }
+        
+        if ball > 0 {
+            print("\(ball)볼")
+        }
     }
-    
-    
 }
+    
+
+
+
+
+
+
