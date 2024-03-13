@@ -18,7 +18,7 @@ class NumberChoice {
         print("1~9까지 숫자 중 세개의 숫자를 입력해주세요")
         
         //플레이어 숫자 입력 , 컴퓨터 랜덤 숫자 저장
-        guard let input = readLine() else {
+        guard let input = readLine()?.split(separator: "") else {
             print("입력이 없습니다.")
             return
         }
@@ -41,7 +41,7 @@ class NumberChoice {
         // 플레이어 , 컴퓨터 숫자 비교 후 결과 도출
         guard playerNumbers.count == comNumbers.count else {
             print("세 개의 숫자를 입력해 주세요.")
-            return
+            return GameStart()
         }
         
         var strike = 0
