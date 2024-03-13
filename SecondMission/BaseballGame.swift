@@ -15,17 +15,9 @@ class NumberChoice {
     var comNumbers: [Int] = []
     
     func GameStart() {
-        print("1~9까지 숫자 중 세개의 숫자를 입력해주세요")
         
-        //플레이어 숫자 입력 , 컴퓨터 랜덤 숫자 저장
-        guard let input = readLine()?.split(separator: "") else {
-            print("입력이 없습니다.")
-            return
-        }
-        playerNumbers = input.compactMap { Int(String($0)) }
+        // MARK: 컴퓨터 랜덤숫자 설정
         
-        
-        // 컴퓨터 랜덤숫자 설정
         var comChoice: [Int]
         repeat {
             let comNumber1: Int = Int.random(in: 1...9)
@@ -37,33 +29,55 @@ class NumberChoice {
         comNumbers = comChoice
         
         
+        
 
-        // 플레이어 , 컴퓨터 숫자 비교 후 결과 도출
-        guard playerNumbers.count == comNumbers.count else {
-            print("세 개의 숫자를 입력해 주세요.")
-            return GameStart()
-        }
         
         var strike = 0
         var ball = 0
+        var attemptCount = 0
+
+        // MARK: 플레이어 입력 값 저장
         
-        for i in 0..<playerNumbers.count {
-            let playerNumer = playerNumbers[i]
+        while true {
+            print("1~9까지 숫자 중 세 개의 숫자를 입력하세요")
+            guard let input = readLine()?.split(separator: "") else {
+                print("세 개의 숫자를 입력해주세요")
+                continue
+            }
+            let playerNumber = input.compactMap { Int(String($0)) }
+            playerNumbers = playerNumber
             
-            if comNumbers.contains(playerNumer) {
-                strike += 1
+            
+        // MARK: 숫자 세 개만 넣을 수 있도록 안내 후 재진행
+            
+            if playerNumbers.count != 3 {
+                print("세 개의 숫자만 넣어주세요")
+                continue
+            }
+            
+            
+        // MARK: 게임 시도 횟수, 입력된 값 컴퓨터, 플레이어 비교
+            attemptCount += 1
+            
+            if comNumbers.elementsEqual(playerNumbers) {
+                print("정답입니다!!!")
+                break
             } else {
-                ball += 1
+                strike = 0
+                ball = 0
+                for i in 0..<playerNumbers.count {
+                    if comNumbers[i] == playerNumbers[i] {
+                        strike += 1
+                    } else if comNumbers.contains(playerNumbers[i]) {
+                        ball += 1
+                    }
+                }
+                
+                print("\(strike)스트라이크, \(ball)볼") //attemptCount 시도횟수는 다음레벨에 사용예정
+                
             }
         }
-        
-        if strike > 0 {
-            print("\(strike)스트라이크")
-        }
-        
-        if ball > 0 {
-            print("\(ball)볼")
-        }
+       
     }
 }
     
