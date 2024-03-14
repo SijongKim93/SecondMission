@@ -15,7 +15,8 @@ class NumberChoice {
     var comNumbers: [Int] = []
     var gameAttempts: [Int] = []
     var attemptCounts: Int = 0
-    
+        
+
     func GameStart() {
         
         // MARK: 컴퓨터 랜덤숫자 설정 (앞자리 0으로 선택되지 않도록 수정)
@@ -31,12 +32,8 @@ class NumberChoice {
         comNumbers = comChoice
         
         
-        
-
-        
         var strike = 0
         var ball = 0
-        var totalGame = 0
         var attemptCount = 0
         
 
@@ -88,12 +85,11 @@ class NumberChoice {
                 
                 print("\(strike)스트라이크, \(ball)볼")
                 attemptCount += 1
-                
             }
         }
     }
     
-    // MARK: 게임시작 전 메뉴 선택 구현
+    // MARK: 게임시작 전 메뉴 선택하는 함수
     
     func SelectMenu() {
         while true {
@@ -107,11 +103,12 @@ class NumberChoice {
                     GameStart()
                     break
                 case 2:
-                    print("게임 기록을 표시합니다.")
+                    print("<게임 기록 보기>")
                     GameRecords()
                     break
                 case 3:
-                    print("프로그램을 종료합니다.")
+                    print("숫자 야구 게임을 종료합니다.")
+                    GameEnd()
                     break
                 default:
                     print("잘못된 입력입니다. 1, 2, 3 중에서 선택해주세요.")
@@ -122,21 +119,24 @@ class NumberChoice {
         }
     }
     
+    
+    // MARK: 코드 기록하는 함수
     func GameRecords() {
         guard !gameAttempts.isEmpty else {
             print("기록된 게임이 없습니다.")
             return
         }
         
-        
-        print("<게임 기록 보기>")
         for (index, attempt) in gameAttempts.enumerated() {
             print("\(index + 1)번째 게임 : 시도 횟수 \(attempt)회")
         }
     }
     
+    // MARK: 게임 종료 함수
     
-    
+    func GameEnd() {
+        gameAttempts.removeAll()
+    }
 }
     
 
