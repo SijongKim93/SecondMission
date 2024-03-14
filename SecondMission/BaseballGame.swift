@@ -13,14 +13,16 @@ class NumberChoice {
     
     var playerNumbers: [Int] = []
     var comNumbers: [Int] = []
+    var gameAttempts: [Int] = []
+    var attemptCounts: Int = 0
     
     func GameStart() {
         
-        // MARK: 컴퓨터 랜덤숫자 설정
+        // MARK: 컴퓨터 랜덤숫자 설정 (앞자리 0으로 선택되지 않도록 수정)
         
         var comChoice: [Int]
         repeat {
-            let comNumber1: Int = Int.random(in: 0...9)
+            let comNumber1: Int = Int.random(in: 1...9)
             let comNumber2: Int = Int.random(in: 0...9)
             let comNumber3: Int = Int.random(in: 0...9)
             
@@ -34,7 +36,9 @@ class NumberChoice {
         
         var strike = 0
         var ball = 0
+        var totalGame = 0
         var attemptCount = 0
+        
 
         // MARK: 플레이어 입력 값 저장
         
@@ -62,12 +66,14 @@ class NumberChoice {
             }
             
             
-        // MARK: 게임 시도 횟수, 입력된 값 컴퓨터, 플레이어 비교
+        // MARK: 게임 시도 횟수 증가, 입력된 값 컴퓨터, 플레이어 비교
             
-            attemptCount += 1
+            attemptCounts = attemptCount
+            
             
             if comNumbers.elementsEqual(playerNumbers) {
                 print("정답입니다!!!")
+                gameAttempts.append(attemptCount)
                 break
             } else {
                 strike = 0
@@ -80,7 +86,8 @@ class NumberChoice {
                     }
                 }
                 
-                print("\(strike)스트라이크, \(ball)볼") //attemptCount 시도횟수는 다음레벨에 사용예정
+                print("\(strike)스트라이크, \(ball)볼")
+                attemptCount += 1
                 
             }
         }
@@ -101,6 +108,7 @@ class NumberChoice {
                     break
                 case 2:
                     print("게임 기록을 표시합니다.")
+                    GameRecords()
                     break
                 case 3:
                     print("프로그램을 종료합니다.")
@@ -113,6 +121,22 @@ class NumberChoice {
             }
         }
     }
+    
+    func GameRecords() {
+        guard !gameAttempts.isEmpty else {
+            print("기록된 게임이 없습니다.")
+            return
+        }
+        
+        
+        print("<게임 기록 보기>")
+        for (index, attempt) in gameAttempts.enumerated() {
+            print("\(index + 1)번째 게임 : 시도 횟수 \(attempt)회")
+        }
+    }
+    
+    
+    
 }
     
 
