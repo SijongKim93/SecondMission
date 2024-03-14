@@ -20,9 +20,9 @@ class NumberChoice {
         
         var comChoice: [Int]
         repeat {
-            let comNumber1: Int = Int.random(in: 1...9)
-            let comNumber2: Int = Int.random(in: 1...9)
-            let comNumber3: Int = Int.random(in: 1...9)
+            let comNumber1: Int = Int.random(in: 0...9)
+            let comNumber2: Int = Int.random(in: 0...9)
+            let comNumber3: Int = Int.random(in: 0...9)
             
             comChoice = [comNumber1, comNumber2, comNumber3]
         } while Set(comChoice).count < 3
@@ -37,9 +37,8 @@ class NumberChoice {
         var attemptCount = 0
 
         // MARK: 플레이어 입력 값 저장
-        
+        print("1~9까지 숫자 중 세 개의 숫자를 입력하세요")
         while true {
-            print("1~9까지 숫자 중 세 개의 숫자를 입력하세요")
             guard let input = readLine()?.split(separator: "") else {
                 print("세 개의 숫자를 입력해주세요")
                 continue
@@ -48,11 +47,16 @@ class NumberChoice {
             playerNumbers = playerNumber
             
             
-        // MARK: 숫자 세 개만 넣을 수 있도록 안내 후 재진행
+        // MARK: 숫자는 세 개만 넣을 수 있고 같은 숫자는 넣을 수 없음 규칙 생성
             
             if playerNumbers.count != 3 {
                 print("세 개의 숫자만 넣어주세요")
                 continue
+            } else if Set(playerNumbers).count != playerNumbers.count {
+                print("같은 숫자는 입력할 수 없습니다.")
+                continue
+            } else if playerNumbers.first == 0 {
+                print("0은 첫번째 자리에 올 수 없습니다.")
             }
             
             
